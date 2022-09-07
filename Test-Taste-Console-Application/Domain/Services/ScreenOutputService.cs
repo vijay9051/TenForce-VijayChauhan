@@ -103,7 +103,7 @@ namespace Test_Taste_Console_Application.Domain.Services
         {
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
             var moons = _moonService.GetAllMoons().ToArray();
-            
+
             if (!moons.Any())
             {
                 Console.WriteLine(OutputString.NoMoonsFound);
@@ -131,7 +131,7 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             ConsoleWriter.CreateLine(columnSizesForMoons);
             ConsoleWriter.CreateEmptyLines(2);
-            
+
             /*
                 This is an example of the output for the moon around the earth:
                 --------------------+--------------------+------------------------------+--------------------
@@ -163,28 +163,28 @@ namespace Test_Taste_Console_Application.Domain.Services
             Console.WriteLine("Writing data...");
             ConsoleWriter.CreateHeader(columnLabels, columnSizes);
 
-            foreach(Planet planet in planets)
-            {                
-                if(planet.HasMoons())
-                {        
-                    float avgGravity=0;
+            foreach (Planet p in planets)
+            {
+                if (p.HasMoons())
+                {
+                    float avgGravity = 0;
 
-                    for (int i = 0,i <=Planet.Moons.Count; i++)
-                     {
-                        avgGravity = avgGravity + planet.Moons[i].gravity;    
-                     }
+                    for (int i = 0; i < p.Moons.Count; i++)
+                    {
+                        avgGravity += p.Moons.ToList()[i].MassValue;
+                    }
                     // calculate avereg moons gravity of planet.
-                    avgGravity = avgGravity / Planet.Moons.Count;
-                    ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"{avgGravity}" }, columnSizes);                    
+                    avgGravity = avgGravity / p.Moons.Count;
+                    ConsoleWriter.CreateText(new string[] { $"{p.Id}", $"{avgGravity}" }, columnSizes);
                 }
                 else
                 {
-                    ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"-" }, columnSizes);
+                    ConsoleWriter.CreateText(new string[] { $"{p.Id}", $"-" }, columnSizes);
                 }
-            }            
+            }
             ConsoleWriter.CreateLine(columnSizes);
             ConsoleWriter.CreateEmptyLines(2);
-            
+
             /*
                 --------------------+--------------------------------------------------
                 Planet's Number     |Planet's Average Moon Gravity
