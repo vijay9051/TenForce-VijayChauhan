@@ -13,6 +13,7 @@ namespace Test_Taste_Console_Application.Domain.Objects
         public float AverageMoonGravity
         {
             get => 0.0f;
+            set;
         }
 
         public Planet(PlanetDto planetDto)

@@ -146,6 +146,7 @@ namespace Test_Taste_Console_Application.Domain.Services
         public void OutputAllPlanetsAndTheirAverageMoonGravityToConsole()
         {
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
+            Console.WriteLine("Loading data...");
             var planets = _planetService.GetAllPlanets().ToArray();
             if (!planets.Any())
             {
@@ -159,21 +160,28 @@ namespace Test_Taste_Console_Application.Domain.Services
                 OutputString.PlanetId, OutputString.PlanetMoonAverageGravity
             };
 
-
+            Console.WriteLine("Writing data...");
             ConsoleWriter.CreateHeader(columnLabels, columnSizes);
 
             foreach(Planet planet in planets)
-            {
+            {                
                 if(planet.HasMoons())
-                {
-                    ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"{planet.AverageMoonGravity}" }, columnSizes);
+                {        
+                    float avgGravity=0;
+
+                    for (int i = 0,i <=Planet.Moons.Count; i++)
+                     {
+                        avgGravity = avgGravity + planet.Moons[i].gravity;    
+                     }
+                    // calculate avereg moons gravity of planet.
+                    avgGravity = avgGravity / Planet.Moons.Count;
+                    ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"{avgGravity}" }, columnSizes);                    
                 }
                 else
                 {
                     ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"-" }, columnSizes);
                 }
-            }
-
+            }            
             ConsoleWriter.CreateLine(columnSizes);
             ConsoleWriter.CreateEmptyLines(2);
             
